@@ -1,0 +1,20 @@
+const FlyersContext = require('../../shared/flyers-context');
+const mongoose = require('mongoose');
+const mongooseDelete = require('mongoose-delete');
+
+const schema = new mongoose.Schema({
+    name: { type: String, required: true, unique: true, maxlength: 200 },
+    type: { type: String, default: 'PRIVATE_INDIVIDUAL', enum: ["LEGAL_ENTITY", "PRIVATE_INDIVIDUAL"] },
+    address: { type: String, required: true, unique: true, maxlength: 100 },
+    telephone: { type: String, required: true, unique: true, maxlength: 20 },
+    email: { type: String, required: true, unique: true, maxlength: 200 },
+},
+    {
+        versionKey: false,
+        timestamps: true
+    });
+
+schema.plugin(mongooseDelete, { overrideMethods: true });
+
+module.exports.ClientSchema = schema;
+module.exports.Client = FlyersContext.conn.model('Client', schema);
