@@ -1,0 +1,19 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API to fliers system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TawanReis1/api-flyers.git"
+  },
+  "author": "Tawan & Thiago",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TawanReis1/api-flyers/issues"
+  },
+  "homepage": "https://github.com/TawanReis1/api-flyers#readme"
+}
