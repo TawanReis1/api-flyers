@@ -16,15 +16,16 @@ class Controller {
     //     }
     // }
 
-    // async getById(ctx) {
-    //     try {
-    //         let res = await service.getById(ctx.params.id);
-    //         res.password = null;
-    //         return onSuccess({}, res, ctx);
-    //     } catch (e) {
-    //         throw onError('Error trying to get dealer by id', e.toString(), ctx);
-    //     }
-    // }
+    async getById(ctx) {
+        try {
+            let res = await service.getById(ctx.params.id);
+            res.password = null;
+            return onSuccess({}, res, ctx);
+        } catch (e) {
+            console.log('e :', e);
+            throw onError('Error trying to get dealer by id', e.toString(), ctx);
+        }
+    }
 
     async create(ctx) {
         try {

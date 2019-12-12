@@ -1,5 +1,8 @@
 const { onError, onSuccess, onCreated, onUpdated, onBadRequest, onNoContent } = require('../../shared/handlers');
 const flierService = require('./flier.service');
+const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongoose');
+
 
 class Controller {
 
@@ -30,13 +33,15 @@ class Controller {
             if (!ctx.request.body.clientId) return onBadRequest('clientId cannot be null or empty', ctx);
             if (!ctx.request.body.display) return onBadRequest('display cannot be null or empty', ctx);
             if (!ctx.request.body.total) return onBadRequest('total cannot be null or empty', ctx);
-            if (!ctx.request.body.withdraw.date) return onBadRequest('date date cannot be null or empty', ctx);
-            if (!ctx.request.body.withdraw.quantityFlier) return onBadRequest('quantityFlier cannot be null or empty', ctx);
-            if (!ctx.request.body.withdraw.responsible) return onBadRequest('responsible cannot be null or empty', ctx);
+
+            ctx.request.body.clientId = new ObjectId(ctx.request.body.clientId);
+            console.log('ctx.request.body :', ctx.request.body);
 
             const response = await flierService.create(ctx.request.body);
+            console.log('response :', response);
             return onCreated(ctx, response);
         } catch (e) {
+            console.log('e :', e);
             throw onError('Error trying to create flier', e.toString(), ctx);
         }
     }
@@ -49,9 +54,6 @@ class Controller {
             if (!ctx.request.body.clientId) return onBadRequest('clientId cannot be null or empty', ctx);
             if (!ctx.request.body.display) return onBadRequest('display cannot be null or empty', ctx);
             if (!ctx.request.body.total) return onBadRequest('total cannot be null or empty', ctx);
-            if (!ctx.request.body.withdraw.date) return onBadRequest('date date cannot be null or empty', ctx);
-            if (!ctx.request.body.withdraw.quantityFlier) return onBadRequest('quantityFlier cannot be null or empty', ctx);
-            if (!ctx.request.body.withdraw.responsible) return onBadRequest('responsible cannot be null or empty', ctx);
 
             const response = await flierService.updateOne(ctx.params.id, ctx.request.body);
             return onUpdated(ctx, response);

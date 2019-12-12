@@ -8,7 +8,7 @@ class Controller {
     async login(ctx) {
         try {
             const credentials = ctx.headers.authorization;
-            const userAuth = Buffer.from(credentials, 'base64').toString('utf-8');
+            const userAuth = Buffer.from(credentials, 'base64').toString('utf-8').replace('Basic ', '');
             const [email, password] = userAuth.split(':');
 
             const user = await UserService.findOne({ email });

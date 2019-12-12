@@ -13,7 +13,7 @@ class Service {
         const paging = pagingHelper.build(conditions);
 
         const total = await Flier.countDocuments(query);
-        const data = await Flier.find(query).limit(paging.limit).skip(paging.skip).sort(paging.sort).lean();
+        const data = await Flier.find(query).limit(paging.limit).skip(paging.skip).sort(paging.sort).lean().populate(['clientId', 'client']);
 
         return {
             meta: pagingHelper.resolve(paging, total),
