@@ -5,7 +5,7 @@ const pagingHelper = require('../../shared/helpers/paging');
 
 class Service {
     getById(id) {
-        return Flier.findOne({ _id: id });
+        return Flier.findOne({ _id: id }).populate(['clientId', 'client']);
     }
 
     async find(conditions) {

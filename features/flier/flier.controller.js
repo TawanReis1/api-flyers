@@ -49,11 +49,6 @@ class Controller {
     async update(ctx) {
         try {
             if (!ctx.params.id) return onBadRequest('Id cannot be null or empty', ctx);
-            if (!ctx.request.body.name) return onBadRequest('name cannot be null or empty', ctx);
-            if (!ctx.request.body.status) return onBadRequest('status date cannot be null or empty', ctx);
-            if (!ctx.request.body.clientId) return onBadRequest('clientId cannot be null or empty', ctx);
-            if (!ctx.request.body.display) return onBadRequest('display cannot be null or empty', ctx);
-            if (!ctx.request.body.total) return onBadRequest('total cannot be null or empty', ctx);
 
             const response = await flierService.updateOne(ctx.params.id, ctx.request.body);
             return onUpdated(ctx, response);
