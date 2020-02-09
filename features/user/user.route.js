@@ -6,6 +6,7 @@ const routes = new Router();
 
 routes.prefix(`/api/${process.env.BASE_API}/user`);
 
+routes.get('/', guard.Authorize, controller.list);
 routes.get('/:id', guard.Authorize, controller.getById);
 routes.post('/', guard.Authorize, controller.create);
 

@@ -3,18 +3,18 @@ const service = require('./user.service');
 
 class Controller {
 
-    // async list(ctx) {
-    //     try {
-    //         let res = await service.find(ctx.query);
-    //         res.data.forEach(r => {
-    //             r.password = null
-    //         });
+    async list(ctx) {
+        try {
+            let res = await service.find(ctx.query);
+            // res.data.forEach(r => {
+            //     r.password = null
+            // });
 
-    //         return onSuccess(res.meta, res.data, ctx);
-    //     } catch (e) {
-    //         throw onError('Error trying to list dealers', e.toString(), ctx);
-    //     }
-    // }
+            return onSuccess(res.meta, res.data, ctx);
+        } catch (e) {
+            throw onError('Error trying to list users', e.toString(), ctx);
+        }
+    }
 
     async getById(ctx) {
         try {

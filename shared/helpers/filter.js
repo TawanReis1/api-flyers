@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb');
 
 class FilterHelper {
-    regexExpression(search) {
+    regexExpression(search, field="") {
         if (!search) {
             return false;
         }
@@ -12,6 +13,10 @@ class FilterHelper {
 
         if (search === 'false') {
             return false;
+        }
+
+        if (field === 'clientId') {
+            return {clientId: ObjectId(search)}
         }
 
         return {
@@ -34,7 +39,9 @@ class FilterHelper {
         Object.keys(query).forEach((prop) => {
             if (prop.match('filter_')) {
                 if (prop.match('_id')) filters[prop.replace('filter_', '').replace('_id', '')] = this.regexExpressionObjectId(query[prop])
-                else {
+                else if (prop.includes('Id')) {
+                    filters[prop.replace('filter_', '').replace('_id', '')] = this.regexExpressionObjectId(query[prop], 'clientId')
+                } else {
                     filters[prop.replace('filter_', '')] = this.regexExpression(query[prop]);
                 } 
             }

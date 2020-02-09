@@ -1,5 +1,6 @@
 const { onError, onSuccess, onCreated, onUpdated, onBadRequest, onNoContent } = require('../../shared/handlers');
 const clientService = require('./client.service');
+const { ObjectId } = require('mongodb');
 
 class Controller {
 
@@ -9,12 +10,14 @@ class Controller {
 
             return onSuccess(res.meta, res.data, ctx);
         } catch (e) {
+            console.log('e :', e);
             return onError('Error trying to list clients', e.toString(), ctx);
         }
     }
 
     async getById(ctx) {
         try {
+            console.log('ctx.params.id :', ctx.params.id);
             const res = await clientService.getById(ctx.params.id);
 
             return onSuccess({}, res, ctx);
@@ -29,6 +32,8 @@ class Controller {
             if (!ctx.request.body.address) return onBadRequest('Address cannot be null or empty', ctx);
             if (!ctx.request.body.telephone) return onBadRequest('Telephone cannot be null or empty', ctx);
             if (!ctx.request.body.email) return onBadRequest('Email cannot be null or empty', ctx);
+
+            ctx.request.body.userId = new ObjectId(ctx.request.body.userId);
 
             const response = await clientService.create(ctx.request.body);
             return onCreated(ctx, response);

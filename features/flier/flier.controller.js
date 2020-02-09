@@ -1,17 +1,18 @@
 const { onError, onSuccess, onCreated, onUpdated, onBadRequest, onNoContent } = require('../../shared/handlers');
 const flierService = require('./flier.service');
 const { ObjectId } = require('mongodb');
-// const { ObjectId } = require('mongoose');
-
 
 class Controller {
 
     async list(ctx) {
         try {
+            console.log('ctx.query :', JSON.stringify(ctx.query, null, 4));
+
             let res = await flierService.find(ctx.query);
 
             return onSuccess(res.meta, res.data, ctx);
         } catch (e) {
+            console.log('e :', e);
             return onError('Error trying to list fliers', e.toString(), ctx);
         }
     }
@@ -35,13 +36,10 @@ class Controller {
             if (!ctx.request.body.total) return onBadRequest('total cannot be null or empty', ctx);
 
             ctx.request.body.clientId = new ObjectId(ctx.request.body.clientId);
-            console.log('ctx.request.body :', ctx.request.body);
 
             const response = await flierService.create(ctx.request.body);
-            console.log('response :', response);
             return onCreated(ctx, response);
         } catch (e) {
-            console.log('e :', e);
             throw onError('Error trying to create flier', e.toString(), ctx);
         }
     }
